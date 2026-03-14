@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ნიკო მუსხელიშვილი — მეხსიერების გვერდი</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --parchment: #ede8dc;
+      --warm-white: #faf7f2;
+      --ink: #1a1512;
+      --ink-soft: #3d3530;
+      --ink-muted: #7a6e65;
+      --gold: #b8963e;
+      --gold-light: #d4af6a;
+      --gold-pale: #f0e8d0;
+      --rust: #8b3a2a;
+      --sage: #5a6b4e;
+      --border: #d8cfc0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--warm-white);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    nav .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    nav ul a {
+      font-family: 'EB Garamond', serif;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 64px 80px 64px;
+      position: relative;
+    }
+
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(184,150,62,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-ornament {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.2s;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 6vw, 78px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    .hero-name em {
+      display: block;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 0.7em;
+      margin-top: 6px;
+    }
+
+    .hero-dates {
+      margin-top: 24px;
+      font-size: 15px;
+      color: var(--ink-muted);
+      letter-spacing: 0.12em;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.6s;
+    }
+
+    .hero-dates span {
+      color: var(--gold);
+      margin: 0 12px;
+    }
+
+    .hero-tagline {
+      margin-top: 36px;
+      font-size: 20px;
+      font-style: italic;
+      color: rgba(245,240,232,0.65);
+      max-width: 360px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.8s;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 40px 0;
+      opacity: 0;
+      animation: expandLine 0.9s ease forwards 1s;
+    }
+
+    .hero-bio-short {
+      font-size: 16px;
+      color: rgba(245,240,232,0.55);
+      max-width: 380px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.2s;
+    }
+
+    /* ── HERO RIGHT: PHOTO ── */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: var(--parchment);
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold-pale) 0%, var(--parchment) 60%);
+    }
+
+    .hero-photo-frame {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      height: 420px;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards 0.8s;
+    }
+
+    .hero-photo-frame::before {
+      content: '';
+      position: absolute;
+      top: -12px; left: -12px; right: 12px; bottom: 12px;
+      border: 2px solid var(--gold);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .hero-photo-frame::after {
+      content: '';
+      position: absolute;
+      top: 12px; left: 12px; right: -12px; bottom: -12px;
+      border: 1px solid rgba(184,150,62,0.35);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .hero-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: sepia(15%) contrast(1.05);
+      display: block;
+    }
+
+    .photo-caption {
+      position: absolute;
+      bottom: 48px;
+      right: 48px;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .georgian-pattern {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      width: 80px;
+      height: 80px;
+      opacity: 0.12;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 96px 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--warm-white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 18px;
+      color: var(--ink-soft);
+      margin-bottom: 20px;
+      line-height: 1.85;
+    }
+
+    .about-text p:first-child::first-letter {
+      font-family: 'Cinzel', serif;
+      font-size: 58px;
+      font-weight: 700;
+      float: left;
+      line-height: 1;
+      margin-right: 8px;
+      margin-top: 4px;
+      color: var(--gold);
+    }
+
+    .quote-block {
+      background: var(--parchment);
+      border-left: 3px solid var(--gold);
+      padding: 32px 36px;
+      margin-top: 40px;
+      position: relative;
+    }
+
+    .quote-block::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      color: var(--gold);
+      opacity: 0.3;
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      line-height: 1;
+    }
+
+    .quote-block p {
+      font-size: 20px;
+      font-style: italic;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      padding-top: 12px;
+    }
+
+    .quote-block cite {
+      display: block;
+      margin-top: 16px;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    .stats-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .stat-item {
+      padding: 28px 32px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+    }
+
+    .stat-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+    }
+
+    .stat-number {
+      font-family: 'Cinzel', serif;
+      font-size: 42px;
+      color: var(--gold);
+      line-height: 1;
+      font-weight: 600;
+    }
+
+    .stat-label {
+      font-size: 15px;
+      color: var(--ink-muted);
+      margin-top: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── TIMELINE ── */
+    #timeline {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    #timeline .section-label {
+      color: var(--gold);
+    }
+
+    #timeline .section-label::after {
+      background: linear-gradient(to right, rgba(184,150,62,0.4), transparent);
+    }
+
+    #timeline .section-title {
+      color: var(--cream);
+    }
+
+    .timeline-track {
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
+      transform: translateX(-50%);
+    }
+
+    .timeline-event {
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr;
+      gap: 0;
+      margin-bottom: 56px;
+      align-items: start;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .timeline-event.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-event:nth-child(odd) .tl-content { grid-column: 1; text-align: right; padding-right: 36px; }
+    .timeline-event:nth-child(odd) .tl-empty  { grid-column: 3; }
+    .timeline-event:nth-child(even) .tl-content { grid-column: 3; padding-left: 36px; }
+    .timeline-event:nth-child(even) .tl-empty  { grid-column: 1; }
+
+    .tl-dot {
+      grid-column: 2;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 6px;
+    }
+
+    .tl-dot-inner {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: var(--ink);
+      position: relative;
+    }
+
+    .tl-dot-inner::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .tl-year {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      color: var(--gold);
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .tl-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--cream);
+      margin-top: 4px;
+    }
+
+    .tl-desc {
+      font-size: 15px;
+      color: rgba(245,240,232,0.6);
+      margin-top: 6px;
+      line-height: 1.7;
+    }
+
+    /* ── WORKS ── */
+    #works {
+      background: var(--parchment);
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .work-card {
+      background: var(--warm-white);
+      padding: 40px 36px;
+      border: 1px solid transparent;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .work-card:hover {
+      background: var(--cream);
+      transform: translateY(-4px);
+      border-color: var(--border);
+    }
+
+    .work-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .work-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .work-year {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .work-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .work-desc {
+      font-size: 15px;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    /* ── HONORS ── */
+    #honors {
+      background: var(--warm-white);
+    }
+
+    .honors-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .honor-badge {
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--ink-soft);
+      letter-spacing: 0.04em;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .honor-badge:hover {
+      border-color: var(--gold);
+      background: var(--gold-pale);
+    }
+
+    .honor-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .honors-image-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 64px;
+    }
+
+    .honors-image-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+
+    .honors-image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(10%) contrast(1.02);
+      transition: transform 0.4s ease;
+    }
+
+    .honors-image-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .honors-image-card .img-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(26,21,18,0.85), transparent);
+      color: var(--cream);
+      padding: 24px 20px 16px;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── LEGACY ── */
+    #legacy {
+      background: linear-gradient(135deg, var(--ink) 0%, #2a1f18 100%);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #legacy::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -10%;
+      width: 70%;
+      height: 200%;
+      background: radial-gradient(ellipse, rgba(184,150,62,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    #legacy .section-title {
+      color: var(--cream);
+    }
+
+    .legacy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .legacy-item {
+      padding: 36px;
+      border: 1px solid rgba(184,150,62,0.25);
+      position: relative;
+      transition: border-color 0.3s;
+    }
+
+    .legacy-item:hover {
+      border-color: rgba(184,150,62,0.7);
+    }
+
+    .legacy-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--gold-light);
+      margin-bottom: 14px;
+      font-weight: 400;
+    }
+
+    .legacy-item p {
+      font-size: 15px;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.75;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(184,150,62,0.3);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: rgba(245,240,232,0.35);
+      letter-spacing: 0.06em;
+    }
+
+    footer .footer-name {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes expandLine {
+      from { opacity: 0; width: 0; }
+      to   { opacity: 1; width: 60px; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      nav ul { gap: 20px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { min-height: 80vh; padding: 100px 32px 60px; }
+      .hero-right { min-height: 400px; }
+      .hero-photo-frame { width: 220px; height: 300px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .timeline-track::before { left: 20px; }
+      .timeline-event { grid-template-columns: 40px 1fr; gap: 0; }
+      .timeline-event:nth-child(odd) .tl-content,
+      .timeline-event:nth-child(even) .tl-content { grid-column: 2; text-align: left; padding-left: 24px; padding-right: 0; }
+      .timeline-event:nth-child(odd) .tl-empty,
+      .timeline-event:nth-child(even) .tl-empty { display: none; }
+      .tl-dot { grid-column: 1; justify-content: flex-start; padding-left: 14px; }
+      .works-grid { grid-template-columns: 1fr; }
+      .legacy-grid { grid-template-columns: 1fr; }
+      .honors-image-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .container { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">ნ. მუსხელიშვილი</div>
+    <ul>
+      <li><a href="#about">ბიოგრაფია</a></li>
+      <li><a href="#timeline">ქრონოლოგია</a></li>
+      <li><a href="#works">შრომები</a></li>
+      <li><a href="#honors">ჯილდოები</a></li>
+      <li><a href="#legacy">მემკვიდრეობა</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-left">
+      <p class="hero-ornament">1891 — 1976 &nbsp;·&nbsp; თბილისი, საქართველო</p>
+      <h1 class="hero-name">
+        ნიკოლოზ<br>მუსხელიშვილი
+        <em>Nikoloz Muskhelishvili</em>
+      </h1>
+      <p class="hero-dates">16 თებერვალი <span>·</span> 15 ივლისი</p>
+      <p class="hero-tagline">მათემატიკოსი, ფიზიკოსი და ინჟინერი — საქართველოს მეცნიერებათა აკადემიის ფუძემდებელი</p>
+      <div class="hero-divider"></div>
+      <p class="hero-bio-short">
+        „ნიკო" — ასე იცნობდნენ მას მეგობრები და კოლეგები.
+        ის გახდა XX საუკუნის გამოჩენილი მეცნიერი, ვის სახელსაც
+        მექანიკისა და ელასტიურობის თეორიის ყველა სახელმძღვანელო შეიცავს.
+      </p>
+    </div>
+    <div class="hero-right">
+      <svg class="georgian-pattern" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" stroke="#1a1512" stroke-width="2"/>
+        <circle cx="50" cy="50" r="30" stroke="#1a1512" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="15" stroke="#1a1512" stroke-width="1"/>
+        <line x1="5" y1="50" x2="95" y2="50" stroke="#1a1512" stroke-width="1"/>
+        <line x1="50" y1="5" x2="50" y2="95" stroke="#1a1512" stroke-width="1"/>
+        <line x1="18" y1="18" x2="82" y2="82" stroke="#1a1512" stroke-width="0.7"/>
+        <line x1="82" y1="18" x2="18" y2="82" stroke="#1a1512" stroke-width="0.7"/>
+      </svg>
+      <div class="hero-photo-frame">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/b/b8/Nikoloz_Muskhelishvili.jpg"
+          alt="ნიკოლოზ მუსხელიშვილი"
+          onerror="this.src='https://via.placeholder.com/320x420/ede8dc/b8963e?text=N.M'"
+        />
+      </div>
+      <div class="photo-caption">
+        საქართველოს მეცნიერებათა<br>
+        აკადემიის პირველი პრეზიდენტი<br>
+        <em style="color:var(--gold)">1941 — 1972</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">ბიოგრაფია</div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            ნიკოლოზ (ნიკო) მუსხელიშვილი დაიბადა 1891 წლის 16 თებერვალს თბილისში,
+            ინჟინრების ოჯახში. მისი მამა, ივანე მუსხელიშვილი, იყო
+            სამეფო სახლის ინჟინრის კორპუსის გენერალი. ბავშვობა ნიკომ
+            გაატარა სოფელ მაწევანში, თბილისთან ახლოს.
+          </p>
+          <p>
+            1909 წელს ჩაირიცხა სანქტ-პეტერბურგის უნივერსიტეტის ფიზიკა-მათემატიკის
+            ფაკულტეტზე, სადაც 1914 წელს წარჩინებით დაამთავრა სწავლა.
+            მის მასწავლებელს, პროფ. კრილოვს, ახალგაზრდა სტუდენტი იმდენად
+            შთაბეჭდილება მოახდინა, რომ კოლეგებს განუცხადა:
+          </p>
+          <div class="quote-block">
+            <p>„დაიმახსოვრეთ სახელი — მუსხელიშვილი; ამ სახელს ხშირად გაიგებთ მომავალში."</p>
+            <cite>— პროფ. ა. ნ. კრილოვი, მექანიკის პროფესორი</cite>
+          </div>
+          <p style="margin-top:20px">
+            1920 წელს, საქართველოს დემოკრატიული რესპუბლიკის მოწვევით,
+            ნიკო დაბრუნდა სამშობლოში ეროვნული სამეცნიერო სკოლის ჩამოყალიბებისათვის.
+            1941 წელს გახდა ახლადშექმნილი საქართველოს სსრ მეცნიერებათა
+            აკადემიის პირველი პრეზიდენტი — თანამდებობა, რომელიც 31 წელი ეკავა.
+          </p>
+        </div>
+        <div class="stats-panel reveal reveal-delay-1">
+          <div class="stat-item">
+            <div class="stat-number">31</div>
+            <div class="stat-label">წელი საქართველოს მეცნიერებათა აკადემიის პრეზიდენტად (1941–1972)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5×</div>
+            <div class="stat-label">ლენინის ორდენი — 1941, 1952, 1961, 1966, 1975 წლებში</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">8</div>
+            <div class="stat-label">მოწვევა საბჭოთა კავშირის უმაღლეს საბჭოში (1937–1974)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1957</div>
+            <div class="stat-label">სსრკ მეცნიერებათა აკადემიის პრეზიდიუმის წევრი</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">85</div>
+            <div class="stat-label">წლის ასაკი — პენსიაზე გასვლის შემდეგ ხუთი წელი კიდევ იცხოვრა</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="container">
+      <div class="section-label">ქრონოლოგია</div>
+      <h2 class="section-title reveal">ცხოვრების გზა</h2>
+      <div class="timeline-track">
+
+        <div class="timeline-event">
+          <div class="tl-content">
+            <div class="tl-year">1891</div>
+            <div class="tl-title">დაბადება თბილისში</div>
+            <div class="tl-desc">16 თებერვალს, ინჟინრებისა და მოაზროვნეების ოჯახში. ბავშვობა გაატარა სოფელ მაწევანში.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-empty"></div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-content">
+            <div class="tl-year">1909–1914</div>
+            <div class="tl-title">სანქტ-პეტერბურგის უნივერსიტეტი</div>
+            <div class="tl-desc">ფიზიკა-მათემატიკის ფაკულტეტი. სწავლობდა პროფ. კოლოსოვთან — ელასტიურობის თეორიის ფუძემდებელთან.</div>
+          </div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-content">
+            <div class="tl-year">1915</div>
+            <div class="tl-title">პირველი სამეცნიერო ნაშრომი</div>
+            <div class="tl-desc">გამოაქვეყნა ნაშრომი წრეული ელასტიური დისკების წონასწორობის შესახებ, კოლოსოვთან ერთად.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-empty"></div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-content">
+            <div class="tl-year">1920</div>
+            <div class="tl-title">საქართველოში დაბრუნება</div>
+            <div class="tl-desc">დემოკრატიული რესპუბლიკის მოწვევით დაბრუნდა სამშობლოში ეროვნული სამეცნიერო სკოლის შესაქმნელად.</div>
+          </div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-content">
+            <div class="tl-year">1922</div>
+            <div class="tl-title">პირველი მონოგრაფია</div>
+            <div class="tl-desc">გამოაქვეყნა „Cauchy-ს ტიპის ინტეგრალების გამოყენება მათემატიკური ფიზიკის პრობლემებში" — ფრანგულ ენაზე.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-empty"></div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-content">
+            <div class="tl-year">1934</div>
+            <div class="tl-title">მეცნიერებათა დოქტორი</div>
+            <div class="tl-desc">მიენიჭა ფიზიკა-მათემატიკის მეცნიერებათა დოქტორის ხარისხი.</div>
+          </div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-content">
+            <div class="tl-year">1941</div>
+            <div class="tl-title">აკადემიის პრეზიდენტი</div>
+            <div class="tl-desc">გახდა ახლადშექმნილი საქართველოს სსრ მეცნიერებათა აკადემიის პირველი პრეზიდენტი.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-empty"></div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-content">
+            <div class="tl-year">1953</div>
+            <div class="tl-title">კლასიკური ნაშრომები ინგლისურად</div>
+            <div class="tl-desc">ინგლისურ ენაზე გამოიცა „ელასტიურობის მათემატიკური თეორიის ზოგიერთი ძირითადი ამოცანა" — მსოფლიო აღიარება.</div>
+          </div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-content">
+            <div class="tl-year">1961</div>
+            <div class="tl-title">სპუტნიკის წვლილი</div>
+            <div class="tl-desc">მიიღო მედალი პირველი ხელოვნური თანამგზავრის გამოშვებაში წვლილისათვის — მისი კვლევები გამოიყენეს კოსმოსური ტექნიკის შექმნაში.</div>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-empty"></div>
+        </div>
+
+        <div class="timeline-event">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-content">
+            <div class="tl-year">1976</div>
+            <div class="tl-title">გარდაცვალება</div>
+            <div class="tl-desc">15 ივლისს გარდაიცვალა თბილისში. დაასაფლავეს მთაწმინდის პანთეონში — ქართველ მწერლებისა და საზოგადო მოღვაწეთა გვერდით.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <div class="container">
+      <div class="section-label">მეცნიერული მემკვიდრეობა</div>
+      <h2 class="section-title reveal">ძირითადი შრომები და კვლევები</h2>
+      <div class="works-grid" style="margin-top:48px">
+        <div class="work-card reveal">
+          <span class="work-icon">∫</span>
+          <div class="work-year">1922 / 1946</div>
+          <div class="work-title">ელასტიურობის თეორია</div>
+          <div class="work-desc">სიბრტყური ელასტიურობის თეორიის ფუნდამენტური კვლევები. მისი ფორმულები კომპლექსური ცვლადების ფუნქციებს იყენებს სტრეს-ტენზორისა და გადაადგილების ვექტორის გამოსახატავად.</div>
+        </div>
+        <div class="work-card reveal reveal-delay-1">
+          <span class="work-icon">∂</span>
+          <div class="work-year">1953</div>
+          <div class="work-title">სინგულარული ინტეგრალური განტოლებები</div>
+          <div class="work-desc">მონოგრაფია „Singular Integral Equations" — მსოფლიო მათემატიკაში ერთ-ერთი ყველაზე ციტირებული ნაშრომი. გამოიცა ინგლისურ, გერმანულ და რუსულ ენებზე.</div>
+        </div>
+        <div class="work-card reveal reveal-delay-2">
+          <span class="work-icon">⊗</span>
+          <div class="work-year">1949 / 1963</div>
+          <div class="work-title">მათემატიკური ფიზიკის ამოცანები</div>
+          <div class="work-desc">„Some Basic Problems of the Mathematical Theory of Elasticity" — ფუნდამენტური სახელმძღვანელო, რომელიც ინჟინრებისა და მათემატიკოსების თაობებს ემსახურება.</div>
+        </div>
+        <div class="work-card reveal">
+          <span class="work-icon">τ</span>
+          <div class="work-year">1939</div>
+          <div class="work-title">გრეხა და მოხრა</div>
+          <div class="work-desc">მონოგრაფია მყარი სხეულის გრეხის (torsion) და მოხრის (bending) შესახებ. ამ კვლევებმა პრაქტიკული გამოყენება ჰპოვა სამხედრო ტექნიკაში — ტანკის საჩარხე სისტემებში.</div>
+        </div>
+        <div class="work-card reveal reveal-delay-1">
+          <span class="work-icon">λ</span>
+          <div class="work-year">1923</div>
+          <div class="work-title">თერმოელასტიურობა</div>
+          <div class="work-desc">„Sur l'équilibre des corps élastiques soumis à l'action de la chaleur" — სითბური ზემოქმედების ქვეშ ელასტიური სხეულების წონასწორობის შესახებ ფრანგულ ენაზე გამოქვეყნებული ნაშრომი.</div>
+        </div>
+        <div class="work-card reveal reveal-delay-2">
+          <span class="work-icon">Σ</span>
+          <div class="work-year">1925</div>
+          <div class="work-title">ქართული მათემატიკური ლექსიკონი</div>
+          <div class="work-desc">ნიკოლაძეს და ხარაძესთან ერთად შეადგინა რუსულ-ქართული, ქართულ-რუსული მათემატიკური ტერმინების ლექსიკონი — ქართული სამეცნიერო ენის ჩამოყალიბების საფუძველი.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HONORS -->
+  <section id="honors">
+    <div class="container">
+      <div class="section-label">ჯილდოები და აღიარება</div>
+      <h2 class="section-title reveal">საერთაშორისო და ეროვნული პატივი</h2>
+      <div class="honors-flex reveal reveal-delay-1">
+        <div class="honor-badge"><span class="dot"></span>ლენინის ორდენი × 5</div>
+        <div class="honor-badge"><span class="dot"></span>სტალინის პრემია (1941)</div>
+        <div class="honor-badge"><span class="dot"></span>სოციალისტური შრომის გმირი</div>
+        <div class="honor-badge"><span class="dot"></span>ლომონოსოვის ოქროს მედალი</div>
+        <div class="honor-badge"><span class="dot"></span>ბულგარეთის მეცნიერებათა აკადემია (1952)</div>
+        <div class="honor-badge"><span class="dot"></span>პოლონეთის მეცნიერებათა აკადემია (1960)</div>
+        <div class="honor-badge"><span class="dot"></span>ბერლინის მეცნიერებათა აკადემია (1967)</div>
+        <div class="honor-badge"><span class="dot"></span>სომხეთისა და აზერბაიჯანის მეცნიერებათა აკადემია (1961)</div>
+        <div class="honor-badge"><span class="dot"></span>კავკასიის დაცვის მედალი (1944)</div>
+        <div class="honor-badge"><span class="dot"></span>სპუტნიკის მედალი (1961)</div>
+        <div class="honor-badge"><span class="dot"></span>ოქტომბრის რევოლუციის ორდენი (1971)</div>
+        <div class="honor-badge"><span class="dot"></span>სსრკ უმაღლეს საბჭოში 8 მოწვევა</div>
+      </div>
+
+      <div class="honors-image-row" style="margin-top:64px">
+        <div class="honors-image-card reveal">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Tbilisi3334.jpg/800px-Tbilisi3334.jpg"
+            alt="მთაწმინდის პანთეონი, თბილისი"
+            onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop'"
+          />
+          <div class="img-caption">მთაწმინდის პანთეონი — ნიკო მუსხელიშვილის განსასვენებელი ადგილი</div>
+        </div>
+        <div class="honors-image-card reveal reveal-delay-1">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/%E1%83%9C%E1%83%98%E1%83%99%E1%83%9D_%E1%83%9B%E1%83%A3%E1%83%A1%E1%83%AE%E1%83%94%E1%83%9A%E1%83%98%E1%83%A8%E1%83%95%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1_%E1%83%AB%E1%83%94%E1%83%92%E1%83%9A%E1%83%98.jpg/800px-%E1%83%9C%E1%83%98%E1%83%99%E1%83%9D_%E1%83%9B%E1%83%A3%E1%83%A1%E1%83%AE%E1%83%94%E1%83%9B%E1%83%98%E1%83%A1%E1%83%95%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1_%E1%83%AB%E1%83%94%E1%83%92%E1%83%9A%E1%83%98.jpg"
+            alt="ნიკო მუსხელიშვილის ძეგლი"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Nikoloz_Muskhelishvili.jpg/300px-Nikoloz_Muskhelishvili.jpg'"
+          />
+          <div class="img-caption">ნიკო მუსხელიშვილის ძეგლი — თბილისი</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGACY -->
+  <section id="legacy">
+    <div class="container">
+      <div class="section-label" style="color:var(--gold)">მემკვიდრეობა</div>
+      <h2 class="section-title reveal">დაუვიწყარი კვალი მეცნიერებაში</h2>
+      <div class="legacy-grid">
+        <div class="legacy-item reveal">
+          <h3>🏛 სამეცნიერო სკოლა</h3>
+          <p>მუსხელიშვილმა ჩამოაყალიბა ქართული მათემატიკური მექანიკის სკოლა, რომელმაც XX საუკუნეში მსოფლიო დონის სპეციალისტები გამოიყვანა. მისი სახელობის პრემია ყოველწლიურად გამოჩენილ მეცნიერებს ეძლევა.</p>
+        </div>
+        <div class="legacy-item reveal reveal-delay-1">
+          <h3>🚀 კოსმოსური ტექნიკა</h3>
+          <p>მისი ელასტიურობის თეორიის კვლევები გამოიყენეს სპუტნიკ-1-ის კონსტრუქციაში. ასევე, სამხედრო ტანკების, თვითმფრინავებისა და სარაკეტო სისტემების შექმნაში ცივი ომის პერიოდში.</p>
+        </div>
+        <div class="legacy-item reveal reveal-delay-2">
+          <h3>📚 ქართული ენა</h3>
+          <p>ნიკო მუსხელიშვილმა საფუძველი ჩაუყარა ქართულ სამეცნიერო ტერმინოლოგიას. მისი 1925 წლის ლექსიკონი დღემდე ამ სფეროში ეტალონს წარმოადგენს.</p>
+        </div>
+        <div class="legacy-item reveal">
+          <h3>🌍 საერთაშორისო აღიარება</h3>
+          <p>ბულგარეთის, პოლონეთისა და ბერლინის სამეცნიერო აკადემიების საპატიო წევრი. მისი ბიოგრაფია 16 ენაზეა თარგმნილი. სახელი „მუსხელიშვილი" მსოფლიოს ყველა ელასტიურობის სახელმძღვანელოშია.</p>
+        </div>
+        <div class="legacy-item reveal reveal-delay-1">
+          <h3>🎓 პედაგოგი</h3>
+          <p>1920-იანი წლებიდან ასწავლიდა თბილისის სახელმწიფო უნივერსიტეტსა და პოლიტექნიკურ ინსტიტუტში. თაობებს გადასცა არა მხოლოდ ცოდნა, არამედ სამეცნიერო ზნეობა.</p>
+        </div>
+        <div class="legacy-item reveal reveal-delay-2">
+          <h3>⚰️ მთაწმინდის პანთეონი</h3>
+          <p>დასაფლავებულია მთაწმინდის პანთეონში — ქართველ მწერლებთან, მოაზროვნეებთან და საზოგადო მოღვაწეებთან ერთად. ეს ადგილი ქართული კულტურისა და ეროვნული სიდიადის სიმბოლოა.</p>
+        </div>
+      </div>
+
+      <!-- closing quote -->
+      <div style="margin-top:72px; text-align:center; opacity: 0.7;" class="reveal">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-style:italic; color:var(--gold-light); max-width:680px; margin:0 auto; line-height:1.6;">
+          „მეცნიერება სამშობლოს სამსახურია —<br>და სამშობლო ჩემი გული იყო."
+        </p>
+        <p style="margin-top:16px; font-size:13px; letter-spacing:0.12em; color:rgba(245,240,232,0.4);">
+          — ნ. მუსხელიშვილი
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-name">ნიკოლოზ მუსხელიშვილი · 1891–1976</span>
+    <p>ინფორმაციის წყარო: Wikipedia, MacTutor History of Mathematics, Springer Encyclopedia of Continuum Mechanics</p>
+    <p>შექმნილია Claude AI-ის მიერ · GitHub Pages-ზე განსათავსებლად</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .timeline-event').forEach(el => observer.observe(el));
+
+    // Nav shrink on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      nav.style.padding = window.scrollY > 60 ? '12px 48px' : '18px 48px';
+    });
+  </script>
+</body>
+</html>
